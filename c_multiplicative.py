@@ -1,48 +1,44 @@
 #!/bin/python3
 import a_baseDic as bDic, sys
 
-message = "My name is huzaifa"
-index = 5
 
-def encrypt(message,i):
+# If we encrypt the message twice, first with the key and then with the inverse of the key, we will get the original message
+def encrypt(message, i):
     message = ''.join(message.split()).lower()
-    cipherText = "" 
+    output = ""
     i = int(i) % 26
     for char in message:
-        char = ((ord(char) -96) % 26)
+        char = ((ord(char) - 96) % 26)
         char = (char * i) % 26
-        cipherText += bDic.dic[char]
-    cipherText = ' '.join([cipherText[i:i+5] for i in range(0, len(cipherText), 5)])
-    print(cipherText)
-    return cipherText 
+        output += bDic.dic[char]
+    output = ' '.join([output[i:i + 5] for i in range(0, len(output), 5)])
+    return output
 
-def decrypt(message,i):
-    message = ''.join(message.split()).lower()
-    plainText = ""
-    for char in message:
-        char = (ord(char) - 96) % 26
-        char = (char * i) % 26
-        plainText += bDic.dic[char]
-    plainText = ' '.join([plainText[i:i+5] for i in range(0, len(plainText), 5)])
-    print(f"{plainText}_{bDic.inverse[i]}_{i}")
-    return plainText    
+# print(len(sys.argv))
+if len(sys.argv) < 4:
+    print('''
+- Windows
+    python.exe c_multiplicative.py encrypt "Message goes here" 11
+    python.exe c_multiplicative.py decrypt "Cipher goes here" 5
+    To Brute Force: python.exe c_multiplicative.py decrypt "Cipher goes here" 0 
+- Linux
+    ./c_multiplicative.py encrypt "Message goes here" 11
+    ./c_multiplicative.py decrypt "Cipher goes here" 5
+    To Brute Force: ./c_multiplicative.py decrypt "Cipher goes here" 0''')
+    sys.exit(0)
 
 message = sys.argv[2]
 index = int(sys.argv[3])
-print(index)
-if (index%2 != 0 and index % 13 !=0) or (index == 0) :
+if (index % 2 != 0 and index % 13 != 0) or (index == 0):
     if sys.argv[1] == "encrypt":
-        encrypt(message,index)
-    elif index != '0' and index % 13 != 0:
-        decrypt(message,index)
-    elif index == 0:
-        for i in range(1,26,2):
-            if i % 13 !=0:
-                decrypt(message,i)
+        print(encrypt(message, index))
+    elif index != 0:
+        print(f"{encrypt(message, index)}_{bDic.inverse[index]}_{index}")
     else:
-        print("Hehe Nice try! Ok")
+        for i in range(1, 26, 2):
+            if i % 13 != 0:
+                print(f"{encrypt(message, i)}_{bDic.inverse[i]}_{i}")
 else:
     print("Hehe Nice try!")
 
-#./c_multiplicative.py decrypt "DLANA GIUQN AUDIL COCHD TDCHG QLDKL UHHAR IGJUD DAH" 0
-
+# ./c_multiplicative.py decrypt "DLANA GIUQN AUDIL COCHD TDCHG QLDKL UHHAR IGJUD DAH" 0
