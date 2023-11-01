@@ -2,7 +2,8 @@
 import a_baseDic as bDic, sys
 
 
-# If we encrypt the message twice, first with the key and then with the inverse of the key, we will get the original message
+# If we encrypt the message twice, first with the key and then with the inverse of the key, we will get the original
+# message
 def encrypt(message, i):
     message = ''.join(message.split()).lower()
     output = ""
@@ -13,6 +14,7 @@ def encrypt(message, i):
         output += bDic.dic[char]
     output = ' '.join([output[i:i + 5] for i in range(0, len(output), 5)])
     return output
+
 
 # print(len(sys.argv))
 if len(sys.argv) < 4:
