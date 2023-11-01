@@ -5,7 +5,7 @@
 # Verify the keys.
 # Because the key unknown,try every possible key.
 # Linguistic approach
-import sys, math, a_baseDic as bDic,time
+import sys, math, a_baseDic as bDic, time
 
 
 # Verifying that the multiplication key is correct
@@ -57,10 +57,12 @@ def count_chars(text):
 
 def brute_force(cipher, expect, message):
     for a in bDic.mul:
-        for b in range(1, 27):
-            if cipher == (((expect * a) + b) % 26):
+        for b in range(0, 27):
+            calc = (expect * a) + b
+            index = calc % 26
+            if cipher == index:
                 c, d = reversal(a, b)
-                print(f"{decrypt(c, d, message)}\n  {a},{b}  _  {c},{d}")
+                print(f"{decrypt(a, b, message)}\n  {a},{b}  _  {c},{d}")
 
 
 def crunch(message):
@@ -77,10 +79,13 @@ def crunch(message):
         for key, val in bDic.dic.items():
             if val == P:
                 P = key
-        print("Brute forcing will print 11 possible output for each possible character. Check every entry. Starting now...")
+        print("Brute forcing will print 11 possible output for each possible character. Check every entry. Starting "
+              "now...")
         time.sleep(3)
         brute_force(C, P, message)
         done = input("Is is decoded? Enter Y to end, N to bruteforce again\n-->")
+        while done != 'N' and done != 'Y':
+            done = input("Please enter Y for yes and N for No\n-->")
         if done == 'Y':
             found = True
 
