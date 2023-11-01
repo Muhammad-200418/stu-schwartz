@@ -20,6 +20,7 @@ def calcinverse(num):
     else:
         print("Please enter a valid number.")
         sys.exit(0)
+        
 
 
 num = int(sys.argv[1])
