@@ -19,10 +19,8 @@ def rotate(message, i):
 
 
 if len(sys.argv) < 4:
-    print('''
-python b_additive.py encrypt "PlainText goes here" 2
-python b_additive.py decrypt "CipherText goes here" 24
-    ''')
+    print('''python b_additive.py encrypt "PlainText goes here" 2
+python b_additive.py decrypt "CipherText goes here" 24''')
     sys.exit(0)
 
 message = sys.argv[2]  # Passed in as third argument on cmd
